@@ -5,16 +5,22 @@ header {
 
 .TopMenu_Container{
     display: grid;
-    grid-template-columns: repeat(1, 3fr) repeat(6, 1fr) repeat(1, 3fr);
-    grid-gap: 2px;
+    grid-template-columns: repeat(1, 3fr) repeat(6, 4fr) repeat(1, 3fr);
+    grid-gap: 0px;
 }
 
 .TopMenu_GridItem {
-  padding: 2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: pink;
+}
+
+.TopMenu_h2 {
+  color: #FFF;
+  font-size: 16px;
+  text-shadow: 0 2px 2px rgba(0,0,0,1.00);
 }
 
 .TopMenu_GridItem:nth-child(1) {
