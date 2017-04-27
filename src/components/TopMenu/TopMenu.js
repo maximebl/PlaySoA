@@ -1,36 +1,41 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import './TopMenu.css';
-import TopMenuButton from './TopMenuButton';
+import FlatButton from 'material-ui/FlatButton';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-class TopMenu extends React.Component {
-    render() {
-        return (
-            <div>
-                <header> 
-                    <TopMenuButton/>
-                    <div className="TopMenu_Container">
+const TopMenu = () => {
+    return (
+        <div>
+            <Router>
+                <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+                    <nav className="TopMenu_Container">
                         <div className="TopMenu_GridItem">
-                            <TopMenuButton/>
+                            <FlatButton label="Home" fullWidth={true} containerElement={<Link to="/home"/>}/>
                         </div>
                         <div className="TopMenu_GridItem">
-                            <h2 className="TopMenu_h2">News</h2>
-                        </div>
+                            <FlatButton label="News" fullWidth={true} containerElement={<Link to="/news"/>}/>
+                        </div>            
                         <div className="TopMenu_GridItem">
-                            <h2 className="TopMenu_h2">Skyland of Arnythos</h2>
-                        </div>
+                            <FlatButton label="Skyland of Arnythos" fullWidth={true} containerElement={<Link to="/soa"/>}/>
+                        </div>            
                         <div className="TopMenu_GridItem">
-                            <h2 className="TopMenu_h2">Media</h2>
-                        </div>
+                            <FlatButton label="Media" fullWidth={true} containerElement={<Link to="/media"/>}/>
+                        </div>            
                         <div className="TopMenu_GridItem">
-                            <h2 className="TopMenu_h2">Contact</h2>
-                        </div>
+                            <FlatButton label="Contact" fullWidth={true} containerElement={<Link to="/contact"/>}/>
+                        </div>            
                         <div className="TopMenu_GridItem">
-                            <h2 className="TopMenu_h2">Team</h2>
-                        </div>
-                    </div>
-                </header>
-            </div>
-        );
-    }
-}
+                            <FlatButton label="Team" fullWidth={true} containerElement={<Link to="/team"/>}/>
+                        </div>            
+                    </nav>
+                </MuiThemeProvider>
+            </Router>
+        </div>
+    );
+};
+
 export default TopMenu;
+

@@ -1,3 +1,20 @@
+
+
+.relativePaper {
+  text-align: center;
+  position: relative;
+  top: 0px;
+  left: 0px;
+  /*height: 200px;
+  width: 100px;*/
+  /*margin: 20px;*/
+}
+.fixedPaper{
+  text-align: center;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
 .container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
