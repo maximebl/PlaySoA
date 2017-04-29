@@ -8,30 +8,14 @@ import TopMenu from './components/TopMenu/TopMenu';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
-// var didScroll = false;
-
-// window.onscroll = doThisStuffOnScroll;
-
-// function doThisStuffOnScroll() {
-//     didScroll = true;
-// }
-
-// setInterval(function() {
-//     if(didScroll) {
-//         didScroll = false;
-//         console.log('You scrolled');
-//     }
-// }, 500);
-
 class App extends Component {
+    
   render() {
     return (
         <div>
-          <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                        <Paper className="relativePaper" zDepth={3}> 
-                            <TopMenu />
-                        </Paper >
-                </MuiThemeProvider>
+            <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+                <TopMenu />
+            </MuiThemeProvider>
           <div className="container">
                 <div className="spring">
                     <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/80625/sun.svg" alt="Sun" width="15%" />
