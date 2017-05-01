@@ -5,9 +5,6 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TopMenu from './components/TopMenu/TopMenu';
 
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
-
 class App extends Component {
     
   render() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 import './TopMenu.css';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -54,15 +54,15 @@ class TopMenu extends Component {
 
 onVisibilityChange(callback) {
     var old_visible;
-    return (function () {
+    return function () {
         var visible = window.scrollY < 100;
         if (visible !== old_visible) {
             old_visible = visible;      
-            if (typeof callback == 'function') {
+            if (typeof callback === 'function') {
                 callback(visible);
             }
         }
-    }).bind(this);
+    }
 }
 render(){
     return (
