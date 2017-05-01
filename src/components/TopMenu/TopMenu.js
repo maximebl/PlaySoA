@@ -6,7 +6,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Paper from 'material-ui/Paper';
+import {grey900} from 'material-ui/styles/colors'
 
+const bigLabel = '17px'
+const smallLabel = '12px'
 
 class TopMenu extends Component {
     constructor(props) {
@@ -14,23 +17,31 @@ class TopMenu extends Component {
 
         this.state = {
             positionMode: 'absoluteMenu',
-            TopMenuContainer: 'TopMenu_Container_absolute'
+            TopMenuContainer: 'TopMenu_Container_absolute',
+            TopMenuFont: {fontSize: bigLabel},
+            SoALabel: "Skyland of Arnythos",
+            GridItemClass: "TopMenu_GridItem_absolute"
         };
         
-        var el = document.getElementsByClassName('TopMenu_Container');
-        
-        var handler = this.onVisibilityChange(el, (function(isMenuVisible) {
-            let positionMode = this.state.positionMode;
+        var handler = this.onVisibilityChange((function(isMenuVisible) {
             
-            if( isMenuVisible === true ){
-                console.log('menu visible: ' + isMenuVisible);
-                this.setState({ positionMode: 'absoluteMenu' });
-                this.setState({ TopMenuContainer: 'TopMenu_Container_absolute' });
+            if( isMenuVisible === true ){ 
+                this.setState({ 
+                    positionMode: 'absoluteMenu', 
+                    TopMenuContainer: 'TopMenu_Container_absolute',
+                    TopMenuFont: {fontSize: bigLabel},
+                    SoALabel: 'Skyland of Arnythos',
+                    GridItemClass: "TopMenu_GridItem_absolute"
+                });
             }
             else{
-                console.log('menu not visible: ' + isMenuVisible);
-                this.setState({ positionMode: 'fixedMenu' });
-                this.setState({ TopMenuContainer: 'TopMenu_Container_fixed' });
+                this.setState({ 
+                    positionMode: 'fixedMenu', 
+                    TopMenuContainer: 'TopMenu_Container_fixed',
+                    TopMenuFont: {fontSize: smallLabel},
+                    SoALabel: 'SoA',
+                    GridItemClass: "TopMenu_GridItem_fixed"
+                });
             }
         }).bind(this));
 
@@ -41,16 +52,8 @@ class TopMenu extends Component {
         }
     }
 
-componentWillMount() {
-    //do
-}
-componentWillUnmount() {
-    //undo
-}
-
-onVisibilityChange(el, callback) {
+onVisibilityChange(callback) {
     var old_visible;
-    
     return (function () {
         var visible = window.scrollY < 100;
         if (visible !== old_visible) {
@@ -61,39 +64,38 @@ onVisibilityChange(el, callback) {
         }
     }).bind(this);
 }
-
-    render(){
-        return (
-            <div>
-                <Router>
-                    <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                        <Paper className={this.state.positionMode} zDepth={2}> 
-                            <nav className={this.state.TopMenuContainer}>
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="Home" fullWidth={true} containerElement={<Link to="/home"/>}/>
-                                </div>
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="News" fullWidth={true} containerElement={<Link to="/news"/>}/>
-                                </div>            
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="Skyland of Arnythos" fullWidth={true} containerElement={<Link to="/soa"/>}/>
-                                </div>            
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="Media" fullWidth={true} containerElement={<Link to="/media"/>}/>
-                                </div>            
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="Contact" fullWidth={true} containerElement={<Link to="/contact"/>}/>
-                                </div>            
-                                <div className="TopMenu_GridItem">
-                                    <FlatButton label="Team" fullWidth={true} containerElement={<Link to="/team"/>}/>
-                                </div>            
-                            </nav>
-                        </Paper >
-                    </MuiThemeProvider>
-                </Router>
-            </div>
-        );
-    }
+render(){
+    return (
+        <div>
+            <Router>
+                <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+                    <Paper className={this.state.positionMode} style={{backgroundColor:grey900}} zDepth={2}> 
+                        <nav className={this.state.TopMenuContainer}>
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label="Home" labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/home"/>} />
+                            </div>
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label="News" labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/news"/>}/>
+                            </div>            
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label={this.state.SoALabel} labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/soa"/>}/>
+                            </div>            
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label="Media" labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/media"/>}/>
+                            </div>            
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label="Contact" labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/contact"/>}/>
+                            </div>            
+                            <div className={this.state.GridItemClass}>
+                                <FlatButton label="Team" labelStyle={this.state.TopMenuFont} fullWidth={true} containerElement={<Link to="/team"/>}/>
+                            </div>            
+                        </nav>
+                    </Paper >
+                </MuiThemeProvider>
+            </Router>
+        </div>
+    );
+}
 }
 export default TopMenu;
 
