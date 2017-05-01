@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './TopMenu.css';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -67,7 +67,6 @@ onVisibilityChange(callback) {
 render(){
     return (
         <div>
-            <Router>
                 <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                     <Paper className={this.state.positionMode} style={{backgroundColor:grey900}} zDepth={2}> 
                         <nav className={this.state.TopMenuContainer}>
@@ -92,7 +91,6 @@ render(){
                         </nav>
                     </Paper >
                 </MuiThemeProvider>
-            </Router>
         </div>
     );
 }

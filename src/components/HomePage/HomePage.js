@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom'
-import './ContactPage.css';
-import FlatButton from 'material-ui/FlatButton';
+import './HomePage.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -9,7 +7,7 @@ import Paper from 'material-ui/Paper';
 import {grey900} from 'material-ui/styles/colors'
 
 
-class ContactPage extends Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
     }
@@ -17,7 +15,7 @@ class ContactPage extends Component {
     render(){
         return (
             <div>
-                <p>CONTACT</p>  
+                <p>HOMEPAGE</p>  
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
@@ -70,9 +68,12 @@ class ContactPage extends Component {
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
                 <p> ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</p>
+                
+                
+                
             </div>
         );
     }
 }
-export default ContactPage;
+export default HomePage;
 
