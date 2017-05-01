@@ -1,0 +1,19 @@
+.contactForm{
+    width:100%;
+}
+.formContent{
+    padding-bottom: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    
+    position:relative;
+}
+.ContactContainer{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 250px;
+    grid-gap: 0px;
+}
+.ContactGridItem:nth-child(1) {
+  grid-column: 2 / 4;
+}

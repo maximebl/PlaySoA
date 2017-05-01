@@ -6,7 +6,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import TopMenu from './components/TopMenu/TopMenu';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ContactPage from './components/ContactPage/ContactPage';
+import ContactPage from './components/Contact/ContactPage';
 import HomePage from './components/HomePage/HomePage';
 
 class App extends Component {
@@ -19,7 +19,7 @@ class App extends Component {
                     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                         <TopMenu />
                     </MuiThemeProvider>
-                    <div className="tempSpace">
+                    <div className="routeContent">
                         <Route path="/home" component={HomePage}/>
                         <Route path="/contact" component={ContactPage}/>
                     </div>
