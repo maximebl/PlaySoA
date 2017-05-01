@@ -2,16 +2,33 @@ header {
     padding-bottom:75px;
     padding-top:75px;
 }
-
-.TopMenu_Container{
+.absoluteMenu {
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+.fixedMenu{
+  width: 70%;
+  text-align: center;
+  position: fixed;
+  top: 0px;
+  left: 15%;
+}
+.TopMenu_Container_absolute{
     display: grid;
-    grid-template-columns: repeat(1, 3fr) repeat(6, 4fr) repeat(1, 3fr);
+    grid-template-columns: 3fr repeat(6, 4fr) 3fr;
+    grid-template-rows: 250px;
     grid-gap: 0px;
 }
-
+.TopMenu_Container_fixed{
+    display: grid;
+    grid-template-columns: 3fr repeat(6, 4fr) 3fr;
+    grid-template-rows: 40px;
+    grid-gap: 0px;
+}
 .TopMenu_GridItem {
-  padding-top: 2em;
-  padding-bottom: 2em;
   display: flex;
   justify-content: center;
   align-items: center;

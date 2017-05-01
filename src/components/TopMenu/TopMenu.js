@@ -13,23 +13,24 @@ class TopMenu extends Component {
         super(props);
 
         this.state = {
-            positionMode: 'relativePaper'
+            positionMode: 'absoluteMenu',
+            TopMenuContainer: 'TopMenu_Container_absolute'
         };
         
-        this.isElementInViewport = this.isElementInViewport.bind(this);
-
         var el = document.getElementsByClassName('TopMenu_Container');
         
         var handler = this.onVisibilityChange(el, (function(isMenuVisible) {
             let positionMode = this.state.positionMode;
             
             if( isMenuVisible === true ){
-                this.setState({ positionMode: 'relativePaper' }); 
                 console.log('menu visible: ' + isMenuVisible);
+                this.setState({ positionMode: 'absoluteMenu' });
+                this.setState({ TopMenuContainer: 'TopMenu_Container_absolute' });
             }
             else{
                 console.log('menu not visible: ' + isMenuVisible);
-                this.setState({ positionMode: 'fixedPaper' }); 
+                this.setState({ positionMode: 'fixedMenu' });
+                this.setState({ TopMenuContainer: 'TopMenu_Container_fixed' });
             }
         }).bind(this));
 
@@ -51,7 +52,7 @@ onVisibilityChange(el, callback) {
     var old_visible;
     
     return (function () {
-        var visible = this.isElementInViewport(el);
+        var visible = window.scrollY < 100;
         if (visible !== old_visible) {
             old_visible = visible;      
             if (typeof callback == 'function') {
@@ -61,21 +62,13 @@ onVisibilityChange(el, callback) {
     }).bind(this);
 }
 
-isElementInViewport(el) {
-    var rect = el[0].getBoundingClientRect();
-    if(this.state.positionMode !== 'fixedPaper'){
-        return (
-            Math.abs(rect.top) < 100
-        );
-    }
-}
     render(){
         return (
             <div>
                 <Router>
                     <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
-                        <Paper className={this.state.positionMode} zDepth={3}> 
-                            <nav className="TopMenu_Container">
+                        <Paper className={this.state.positionMode} zDepth={2}> 
+                            <nav className={this.state.TopMenuContainer}>
                                 <div className="TopMenu_GridItem">
                                     <FlatButton label="Home" fullWidth={true} containerElement={<Link to="/home"/>}/>
                                 </div>
