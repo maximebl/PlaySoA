@@ -13,6 +13,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import HardwareVideogameAsset from 'material-ui/svg-icons/hardware/videogame-asset';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentUndo from 'material-ui/svg-icons/content/undo'
+import CircularProgress from 'material-ui/CircularProgress';
 
 const style = {
   marginRight: 10,
@@ -23,6 +24,7 @@ class ContactForm extends Component {
         super(props);
         this.state = {buttonClicked:false};
         this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
+        this.cancelButtonClickHandler = this.cancelButtonClickHandler.bind(this);
         
     }
 
@@ -30,7 +32,12 @@ sendButtonClickHandler() {
     this.setState({
         buttonClicked:true
     })
-    console.log(this.state.buttonClicked);
+}
+
+cancelButtonClickHandler() {
+    this.setState({
+        buttonClicked:false
+    })
 }
 
     render(){
@@ -54,13 +61,13 @@ sendButtonClickHandler() {
                                 floatingLabelText="Message"
                                 fullWidth={true}
                                 multiLine={true}/><br />
-                                <FloatingActionButton zDepth={1} className="CancelButton" backgroundColor={grey700} mini={true} style={style}>
+                                <FloatingActionButton zDepth={1} className="CancelButton" backgroundColor={grey700} mini={true} style={style} onClick={this.cancelButtonClickHandler}>
                                     <ContentUndo/>
                                 </FloatingActionButton>
-                                <FloatingActionButton zDepth={1} className="SendButton" backgroundColor={lightGreen700} iconClassName="SendButtonIcon" onClick={this.sendButtonClickHandler}>
+                                <FloatingActionButton zDepth={1} className="SendButton" backgroundColor={lightGreen700} iconClassName="SendButtonIcon" onClick={this.sendButtonClickHandler} disabled={this.state.buttonClicked}>
                                     {
                                     this.state.buttonClicked
-                                        ? null
+                                        ? <CircularProgress  />
                                         : <ContentSend hoverColor={lightGreen700} />
                                     }
                                 </FloatingActionButton>

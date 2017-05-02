@@ -20,3 +20,6 @@
 .SendButton:hover .SendButtonIcon {
     padding-left: 20px;
 }
+.CancelButton{
+    margin-left:40%;
+}

@@ -55,7 +55,7 @@ class TopMenu extends Component {
 onVisibilityChange(callback) {
     var old_visible;
     return function () {
-        var visible = window.scrollY < 100;
+        var visible = window.scrollY < 200;
         if (visible !== old_visible) {
             old_visible = visible;      
             if (typeof callback === 'function') {
