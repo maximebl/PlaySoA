@@ -20,57 +20,62 @@ class ContactForm extends Component {
         super(props);
         this.state = {
             buttonClicked: false, 
-            formIsMissingRequiredFields: false,
-            NameField: '',
-            EmailField: '',
-            SubjectField: '',
-            MessageField: ''
+            formIsMissingRequiredFields: true,
+            NameField: {value: '', status: '', name: 'NameField'},
+            EmailField: {value: '', status: '', name: 'EmailField'},
+            SubjectField: {value: '', status: '', name: 'SubjectField'},
+            MessageField: {value: '', status: '', name: 'MessageField'}
         };
         this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         this.cancelButtonClickHandler = this.cancelButtonClickHandler.bind(this);
-        this.handleNameFieldChange = this.handleNameFieldChange.bind(this);
     }
 
 sendButtonClickHandler() {
-    function isNotNullOrEmpty(element, index, array) { 
-        return element !== null && element !== ""; 
-    } 
     debugger;
+    let missingFieldsCount = 0;    
     let fieldsList = [this.state.NameField, this.state.EmailField, this.state.SubjectField, this.state.MessageField]
-    let AllFieldsFilled = fieldsList.every(isNotNullOrEmpty);
+    fieldsList.forEach(function validate(currentField, index, array){
+        if(currentField.value === '' || typeof currentField.value === 'undefined'){
+            missingFieldsCount++;
+        }        
+        this.setState(function(prevState){
+            debugger;
+            if(currentField.value === '' || typeof currentField.value === 'undefined'){
+                // Return the new state
+                return{[currentField.name]:{status: 'This field is required.', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+            }
+            else{
+                // Return the previous state
+                return{[currentField.name]:{status: '', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+            }
+        })
+    }.bind(this));
 
-    this.setState({
-        buttonClicked:true
-    })
+    if (missingFieldsCount === 0){
+        this.setState({buttonClicked: true});
+    }
+    else{
+        this.setState({buttonClicked: false});
+    }
 }
 
 cancelButtonClickHandler() {
+    debugger;
     this.setState({
         buttonClicked:false
     })
 }
 
-handleNameFieldChange = (event, newValue) => {
-    this.setState({
-        NameField: newValue
+handleInputChange = (event, newValue) => {
+    // let partialState = {[event.target.name]:{value: newValue}}
+    // this.setState(partialState);
+    let targetName = event.target.name;
+    this.setState(function(prevState){
+        debugger;
+        return{[targetName]:{value: newValue, name: prevState[targetName].name, status: prevState[targetName].status}}
     })
-};
-handleEmailFieldChange = (event, newValue) => {
-    this.setState({
-        EmailField: newValue
-    })   
-};
-handleSubjectFieldChange = (event, newValue) => {
-    this.setState({
-        SubjectField: newValue
-    })
-};
-handleMessageFieldChange = (event, newValue) => {
-    this.setState({
-        MessageField: newValue
-    })
-};
-
+}
 
     render(){
         return (
@@ -81,29 +86,36 @@ handleMessageFieldChange = (event, newValue) => {
                             <div className="formContent">
                                 <TextField
                                     name="NameField"
-                                    onChange={this.handleNameFieldChange}
-                                    value={this.state.NameField}
-                                    errorText="This field is required"
+                                    onChange={this.handleInputChange}
+                                    value={this.state.NameField.value}
+                                    errorText={this.state.NameField.status}
                                     hintText="Enter your name"
+                                    disabled={this.state.buttonClicked}
                                     floatingLabelText="Name"/><br />
                                 <TextField
                                     name="EmailField"
-                                    onChange={this.handleEmailFieldChange}
-                                    value={this.state.EmailField}
+                                    onChange={this.handleInputChange}
+                                    value={this.state.EmailField.value}
+                                    errorText={this.state.EmailField.status}
                                     hintText="Enter your email address"
+                                    disabled={this.state.buttonClicked}
                                     floatingLabelText="E-mail"/><br />
                                 <TextField
                                     name="SubjectField"
-                                    onChange={this.handleSubjectFieldChange}
-                                    value={this.state.SubjectField}
+                                    onChange={this.handleInputChange}
+                                    value={this.state.SubjectField.value}
+                                    errorText={this.state.SubjectField.status}
                                     hintText="The subject of your message"
+                                    disabled={this.state.buttonClicked}
                                     floatingLabelText="Subject"/><br />
                                 <TextField
                                     name="MessageField"
-                                    onChange={this.handleMessageFieldChange}
-                                    value={this.state.MessageField}
+                                    onChange={this.handleInputChange}
+                                    value={this.state.MessageField.value}
+                                    errorText={this.state.MessageField.status}
                                     hintText="Compose your message"
                                     floatingLabelText="Message"
+                                    disabled={this.state.buttonClicked}
                                     fullWidth={true}
                                     multiLine={true}/><br />
                                 <FloatingActionButton zDepth={1} className="CancelButton" backgroundColor={grey700} mini={true} onClick={this.cancelButtonClickHandler}>
