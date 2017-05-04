@@ -63,6 +63,7 @@ sendButtonClickHandler() {
     else{
         this.setState({buttonClicked: false});
     }
+    setTimeout(function(){ alert("Hello"); }, 3000);
 }
 
 cancelButtonClickHandler() {
