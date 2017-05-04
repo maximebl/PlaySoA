@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom'
 import './Contact.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import FlatButton from 'material-ui/FlatButton';
@@ -10,10 +11,12 @@ import {grey900, lightGreen700, grey700} from 'material-ui/styles/colors'
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import HardwareVideogameAsset from 'material-ui/svg-icons/hardware/videogame-asset';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentUndo from 'material-ui/svg-icons/content/undo'
 import CircularProgress from 'material-ui/CircularProgress';
+import Snackbar from 'material-ui/Snackbar';
+
+import SendButton from '../GenericControls/SendButton';
 
 const FIELD_REQUIRED = 'This field is required.';
 
@@ -23,6 +26,7 @@ class ContactForm extends Component {
         this.state = {
             buttonClicked: false, 
             formIsMissingRequiredFields: true,
+            messageSent:false,
             NameField: {value: '', status: '', name: 'NameField'},
             EmailField: {value: '', status: '', name: 'EmailField'},
             SubjectField: {value: '', status: '', name: 'SubjectField'},
@@ -42,7 +46,6 @@ sendButtonClickHandler() {
             missingFieldsCount++;
         }        
         this.setState(function(prevState){
-            debugger;
             if(currentField.value === '' || typeof currentField.value === 'undefined'){
                 // Return the new state
                 return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
@@ -63,7 +66,6 @@ sendButtonClickHandler() {
 }
 
 cancelButtonClickHandler() {
-    debugger;
     this.setState({
         buttonClicked:false
     })
@@ -72,7 +74,6 @@ cancelButtonClickHandler() {
 handleInputChange = (event, newValue) => {
     let targetName = event.target.name;
     this.setState(function(prevState){
-        debugger
         if (prevState[targetName].status === FIELD_REQUIRED && newValue !== '') {
             return{[targetName]:{value: newValue, name: prevState[targetName].name, status: ''}}
         }
@@ -126,17 +127,24 @@ handleInputChange = (event, newValue) => {
                                 <FloatingActionButton zDepth={1} className="CancelButton" backgroundColor={grey700} mini={true} onClick={this.cancelButtonClickHandler}>
                                     <ContentUndo/>
                                 </FloatingActionButton>
-                                <FloatingActionButton zDepth={1} className="SendButton" backgroundColor={lightGreen700} iconClassName="SendButtonIcon" onClick={this.sendButtonClickHandler} disabled={this.state.buttonClicked}>
-                                    {
-                                    this.state.buttonClicked
-                                        ? <CircularProgress  />
-                                        : <ContentSend hoverColor={lightGreen700} />
-                                    }
-                                </FloatingActionButton>
+                                <SendButton 
+                                    className="SendButton"
+                                    iconClassName="SendButtonIcon"
+                                    onClick={this.sendButtonClickHandler}
+                                    isClicked={this.state.buttonClicked}
+                                    messageSent={this.state.messageSent}>
+                                </SendButton>
                             </div>
                         </Paper>
                     </div>
                 </MuiThemeProvider>
+                <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+                    <Snackbar
+                    open={this.state.buttonClicked}
+                    message="Message sent!"
+                    autoHideDuration={3300}/>
+                </MuiThemeProvider>
+                    
             </div>
         );
     }
