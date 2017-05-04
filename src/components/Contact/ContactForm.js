@@ -15,6 +15,8 @@ import ContentSend from 'material-ui/svg-icons/content/send';
 import ContentUndo from 'material-ui/svg-icons/content/undo'
 import CircularProgress from 'material-ui/CircularProgress';
 
+const FIELD_REQUIRED = 'This field is required.';
+
 class ContactForm extends Component {
     constructor(props) {
         super(props);
@@ -43,7 +45,7 @@ sendButtonClickHandler() {
             debugger;
             if(currentField.value === '' || typeof currentField.value === 'undefined'){
                 // Return the new state
-                return{[currentField.name]:{status: 'This field is required.', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+                return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
             }
             else{
                 // Return the previous state
@@ -68,12 +70,15 @@ cancelButtonClickHandler() {
 }
 
 handleInputChange = (event, newValue) => {
-    // let partialState = {[event.target.name]:{value: newValue}}
-    // this.setState(partialState);
     let targetName = event.target.name;
     this.setState(function(prevState){
-        debugger;
-        return{[targetName]:{value: newValue, name: prevState[targetName].name, status: prevState[targetName].status}}
+        debugger
+        if (prevState[targetName].status === FIELD_REQUIRED && newValue !== '') {
+            return{[targetName]:{value: newValue, name: prevState[targetName].name, status: ''}}
+        }
+        else{
+            return{[targetName]:{value: newValue, name: prevState[targetName].name, status: prevState[targetName].status}}
+        }
     })
 }
 
