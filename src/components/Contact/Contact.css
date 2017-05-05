@@ -17,6 +17,7 @@
 .ContactGridItem:nth-child(1) {
   grid-column: 2 / 4;
 }
+
 .SendButton:hover .SendButtonIcon {
     padding-left: 20px;
 }

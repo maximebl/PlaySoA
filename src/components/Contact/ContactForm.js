@@ -26,7 +26,7 @@ class ContactForm extends Component {
         this.state = {
             buttonClicked: false, 
             formIsMissingRequiredFields: true,
-            messageSent:false,
+            actionStatus: 'ready',
             NameField: {value: '', status: '', name: 'NameField'},
             EmailField: {value: '', status: '', name: 'EmailField'},
             SubjectField: {value: '', status: '', name: 'SubjectField'},
@@ -35,35 +35,44 @@ class ContactForm extends Component {
         this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
         this.cancelButtonClickHandler = this.cancelButtonClickHandler.bind(this);
+        this.getMessageSentPopUp = this.getMessageSentPopUp.bind(this);
     }
 
 sendButtonClickHandler() {
-    debugger;
-    let missingFieldsCount = 0;    
-    let fieldsList = [this.state.NameField, this.state.EmailField, this.state.SubjectField, this.state.MessageField]
-    fieldsList.forEach(function validate(currentField, index, array){
-        if(currentField.value === '' || typeof currentField.value === 'undefined'){
-            missingFieldsCount++;
-        }        
-        this.setState(function(prevState){
-            if(currentField.value === '' || typeof currentField.value === 'undefined'){
-                // Return the new state
-                return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
-            }
-            else{
-                // Return the previous state
-                return{[currentField.name]:{status: '', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
-            }
-        })
-    }.bind(this));
+    // let missingFieldsCount = 0;    
+    // let fieldsList = [this.state.NameField, this.state.EmailField, this.state.SubjectField, this.state.MessageField];
 
-    if (missingFieldsCount === 0){
-        this.setState({buttonClicked: true});
-    }
-    else{
-        this.setState({buttonClicked: false});
-    }
-    setTimeout(function(){ alert("Hello"); }, 3000);
+    // fieldsList.forEach(function validate(currentField, index, array){
+    //     if(currentField.value === '' || typeof currentField.value === 'undefined'){
+    //         missingFieldsCount++;
+    //     }  
+
+    //     this.setState(function(prevState){
+    //         if(currentField.value === '' || typeof currentField.value === 'undefined'){
+    //             // Return the new state
+    //             return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+    //         }
+    //         else{
+    //             // Return the previous state
+    //             return{[currentField.name]:{status: '', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+    //         }
+    //     })
+    // }.bind(this));
+
+
+    // if (missingFieldsCount === 0){
+    //     this.setState({buttonClicked: true});
+    // }
+    // else{
+    //     this.setState({buttonClicked: false});
+    // }
+    debugger;
+    this.setState({ actionStatus: 'loading' })
+
+    setTimeout(function(){ 
+        this.setState({actionStatus:'done'}) 
+    }.bind(this), 3000);
+    
 }
 
 cancelButtonClickHandler() {
@@ -82,6 +91,10 @@ handleInputChange = (event, newValue) => {
             return{[targetName]:{value: newValue, name: prevState[targetName].name, status: prevState[targetName].status}}
         }
     })
+}
+
+getMessageSentPopUp(){
+    return this.state.actionStatus === 'done' ? true : false;
 }
 
     render(){
@@ -132,8 +145,7 @@ handleInputChange = (event, newValue) => {
                                     className="SendButton"
                                     iconClassName="SendButtonIcon"
                                     onClick={this.sendButtonClickHandler}
-                                    isClicked={this.state.buttonClicked}
-                                    messageSent={this.state.messageSent}>
+                                    actionStatus={this.state.actionStatus}>
                                 </SendButton>
                             </div>
                         </Paper>
@@ -141,7 +153,7 @@ handleInputChange = (event, newValue) => {
                 </MuiThemeProvider>
                 <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
                     <Snackbar
-                    open={this.state.buttonClicked}
+                    open={this.getMessageSentPopUp()}
                     message="Message sent!"
                     autoHideDuration={3300}/>
                 </MuiThemeProvider>
