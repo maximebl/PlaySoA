@@ -40,7 +40,6 @@ class ContactForm extends Component {
         this.checkFormIsFilled = this.checkFormIsFilled.bind(this);
         this.getFormDisplay = this.getFormDisplay.bind(this);
         this.getThankYouDisplay = this.getThankYouDisplay.bind(this);
-        this.getFormPaperStyle = this.getFormPaperStyle.bind(this);
     }
 
 checkFormIsFilled(){
@@ -104,64 +103,78 @@ getFormDisplay(){
 getThankYouDisplay(){
     return this.state.actionStatus === ACTION_DONE ? {display : 'inline-block'} : {display : 'none'};
 }
-getFormPaperStyle(){
-    return this.state.actionStatus === ACTION_DONE ? {height : '600px'} : {height : '600px'};
-}
+
     render(){
         return (
             <div>
                 <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                     <div className="contactForm">
-                        <SendButton 
-                            className="SendButton"
-                            iconClassName="SendButtonIcon"
-                            onClick={this.sendButtonClickHandler}
-                            actionStatus={this.state.actionStatus}>
-                        </SendButton>
-                        <Paper zDepth={2} style={{height:'500px'}}>
+                        
+                        <Paper zDepth={2} >
                             <div className="formContent" style={this.getFormDisplay()}>
-                                <TextField
-                                    name="NameField"
-                                    style={{marginBottom: '30px'}}
-                                    onChange={this.handleInputChange}
-                                    value={this.state.NameField.value}
-                                    errorText={this.state.NameField.status}
-                                    hintText="Enter your name"
-                                    disabled={this.getButtonShouldDisable()}
-                                    floatingLabelText="Name"/><br />
-                                <TextField
-                                    name="EmailField"
-                                    style={{marginBottom: '30px'}}
-                                    onChange={this.handleInputChange}
-                                    value={this.state.EmailField.value}
-                                    errorText={this.state.EmailField.status}
-                                    hintText="Enter your email address"
-                                    disabled={this.getButtonShouldDisable()}
-                                    floatingLabelText="E-mail"/><br />
-                                <TextField
-                                    name="SubjectField"
-                                    style={{marginBottom: '30px'}}
-                                    onChange={this.handleInputChange}
-                                    value={this.state.SubjectField.value}
-                                    errorText={this.state.SubjectField.status}
-                                    hintText="The subject of your message"
-                                    disabled={this.getButtonShouldDisable()}
-                                    floatingLabelText="Subject"/><br />
-                                <TextField
-                                    name="MessageField"
-                                    style={{marginBottom: '30px'}}
-                                    onChange={this.handleInputChange}
-                                    value={this.state.MessageField.value}
-                                    errorText={this.state.MessageField.status}
-                                    hintText="Compose your message"
-                                    floatingLabelText="Message"
-                                    disabled={this.getButtonShouldDisable()}
-                                    fullWidth={true}
-                                    multiLine={true}
-                                    rowsMax={3}/><br />
+                                <div className="formGridContainer">
+
+                                    <div className="formGridItem">
+                                        <TextField
+                                            name="NameField"
+                                            style={{marginBottom: '30px'}}
+                                            onChange={this.handleInputChange}
+                                            value={this.state.NameField.value}
+                                            errorText={this.state.NameField.status}
+                                            hintText="Enter your name"
+                                            disabled={this.getButtonShouldDisable()}
+                                            fullWidth={true}
+                                            floatingLabelText="Name"/><br />
+                                    </div>
+                                    <div className="formGridItem">
+                                        <TextField
+                                            name="EmailField"
+                                            style={{marginBottom: '30px'}}
+                                            onChange={this.handleInputChange}
+                                            value={this.state.EmailField.value}
+                                            errorText={this.state.EmailField.status}
+                                            hintText="Enter your email address"
+                                            disabled={this.getButtonShouldDisable()}
+                                            fullWidth={true}
+                                            floatingLabelText="E-mail"/><br />
+                                    </div>
+                                    <div className="formGridItem">
+                                        <TextField
+                                            name="SubjectField"
+                                            style={{marginBottom: '30px'}}
+                                            onChange={this.handleInputChange}
+                                            value={this.state.SubjectField.value}
+                                            errorText={this.state.SubjectField.status}
+                                            hintText="The subject of your message"
+                                            disabled={this.getButtonShouldDisable()}
+                                            fullWidth={true}
+                                            floatingLabelText="Subject"/><br />
+                                    </div>
+                                    <div className="formGridItem">
+                                        <TextField
+                                            name="MessageField"
+                                            style={{marginBottom: '30px'}}
+                                            onChange={this.handleInputChange}
+                                            value={this.state.MessageField.value}
+                                            errorText={this.state.MessageField.status}
+                                            hintText="Compose your message"
+                                            floatingLabelText="Message"
+                                            disabled={this.getButtonShouldDisable()}
+                                            fullWidth={true}
+                                            multiLine={true}/><br />
+                                    </div>
+
+                                </div>
                             </div>
-                            <h1 className="ThankYouHeader" style={this.getThankYouDisplay()}>Thank you.</h1>
-                            
+                            <div className="formConfirmation">
+                                <h1 className="ThankYouHeader" style={this.getThankYouDisplay()}>Thank you.</h1>
+                                <SendButton 
+                                    className="SendButton"
+                                    iconClassName="SendButtonIcon"
+                                    onClick={this.sendButtonClickHandler}
+                                    actionStatus={this.state.actionStatus}>
+                                </SendButton>
+                            </div>
                         </Paper>
                     </div>
                 </MuiThemeProvider>
