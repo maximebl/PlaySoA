@@ -19,14 +19,15 @@ import Snackbar from 'material-ui/Snackbar';
 import SendButton from '../GenericControls/SendButton';
 
 const FIELD_REQUIRED = 'This field is required.';
+const ACTION_LOADING = 'loading';
+const ACTION_READY = 'ready';
+const ACTION_DONE = 'done';
 
 class ContactForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            buttonClicked: false, 
-            formIsMissingRequiredFields: true,
-            actionStatus: 'ready',
+            actionStatus: ACTION_READY,
             NameField: {value: '', status: '', name: 'NameField'},
             EmailField: {value: '', status: '', name: 'EmailField'},
             SubjectField: {value: '', status: '', name: 'SubjectField'},
@@ -34,51 +35,48 @@ class ContactForm extends Component {
         };
         this.sendButtonClickHandler = this.sendButtonClickHandler.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.cancelButtonClickHandler = this.cancelButtonClickHandler.bind(this);
         this.getMessageSentPopUp = this.getMessageSentPopUp.bind(this);
+        this.getButtonShouldDisable = this.getButtonShouldDisable.bind(this);
+        this.checkFormIsFilled = this.checkFormIsFilled.bind(this);
+        this.getFormDisplay = this.getFormDisplay.bind(this);
+        this.getThankYouDisplay = this.getThankYouDisplay.bind(this);
+        this.getFormPaperStyle = this.getFormPaperStyle.bind(this);
     }
 
-sendButtonClickHandler() {
-    // let missingFieldsCount = 0;    
-    // let fieldsList = [this.state.NameField, this.state.EmailField, this.state.SubjectField, this.state.MessageField];
+checkFormIsFilled(){
+    let missingFieldsCount = 0;    
+    let fieldsList = [this.state.NameField, this.state.EmailField, this.state.SubjectField, this.state.MessageField];
 
-    // fieldsList.forEach(function validate(currentField, index, array){
-    //     if(currentField.value === '' || typeof currentField.value === 'undefined'){
-    //         missingFieldsCount++;
-    //     }  
+    fieldsList.forEach(function validate(currentField, index, array){
+        if(currentField.value === '' || typeof currentField.value === 'undefined'){
+            missingFieldsCount++;
+        }  
 
-    //     this.setState(function(prevState){
-    //         if(currentField.value === '' || typeof currentField.value === 'undefined'){
-    //             // Return the new state
-    //             return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
-    //         }
-    //         else{
-    //             // Return the previous state
-    //             return{[currentField.name]:{status: '', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
-    //         }
-    //     })
-    // }.bind(this));
-
-
-    // if (missingFieldsCount === 0){
-    //     this.setState({buttonClicked: true});
-    // }
-    // else{
-    //     this.setState({buttonClicked: false});
-    // }
-    debugger;
-    this.setState({ actionStatus: 'loading' })
-
-    setTimeout(function(){ 
-        this.setState({actionStatus:'done'}) 
-    }.bind(this), 3000);
-    
+        this.setState(function(prevState){
+            if(currentField.value === '' || typeof currentField.value === 'undefined'){
+                // Return the new state
+                return{[currentField.name]:{status: FIELD_REQUIRED, name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+            }
+            else{
+                // Return the previous state
+                return{[currentField.name]:{status: '', name: prevState[currentField.name].name, value: prevState[currentField.name].value}}
+            }
+        })
+    }.bind(this));
+    return missingFieldsCount === 0 ? true : false;
 }
 
-cancelButtonClickHandler() {
-    this.setState({
-        buttonClicked:false
-    })
+sendButtonClickHandler() {
+
+    if (this.checkFormIsFilled()){
+        this.setState({ actionStatus: ACTION_LOADING })
+        setTimeout(function(){ 
+            this.setState({actionStatus:ACTION_DONE}) 
+        }.bind(this), 3000);
+    }
+    else{
+        this.setState({ actionStatus: ACTION_READY })
+    }
 }
 
 handleInputChange = (event, newValue) => {
@@ -94,60 +92,76 @@ handleInputChange = (event, newValue) => {
 }
 
 getMessageSentPopUp(){
-    return this.state.actionStatus === 'done' ? true : false;
+    return this.state.actionStatus === ACTION_DONE ? true : false;
 }
 
+getButtonShouldDisable(){
+    return this.state.actionStatus === ACTION_LOADING ? true : false;
+}
+getFormDisplay(){
+    return this.state.actionStatus === ACTION_DONE ? {display : 'none'} : {display : 'block'};
+}
+getThankYouDisplay(){
+    return this.state.actionStatus === ACTION_DONE ? {display : 'inline-block'} : {display : 'none'};
+}
+getFormPaperStyle(){
+    return this.state.actionStatus === ACTION_DONE ? {height : '600px'} : {height : '600px'};
+}
     render(){
         return (
             <div>
                 <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
                     <div className="contactForm">
-                        <Paper zDepth={2}>
-                            <div className="formContent">
+                        <SendButton 
+                            className="SendButton"
+                            iconClassName="SendButtonIcon"
+                            onClick={this.sendButtonClickHandler}
+                            actionStatus={this.state.actionStatus}>
+                        </SendButton>
+                        <Paper zDepth={2} style={{height:'500px'}}>
+                            <div className="formContent" style={this.getFormDisplay()}>
                                 <TextField
                                     name="NameField"
+                                    style={{marginBottom: '30px'}}
                                     onChange={this.handleInputChange}
                                     value={this.state.NameField.value}
                                     errorText={this.state.NameField.status}
                                     hintText="Enter your name"
-                                    disabled={this.state.buttonClicked}
+                                    disabled={this.getButtonShouldDisable()}
                                     floatingLabelText="Name"/><br />
                                 <TextField
                                     name="EmailField"
+                                    style={{marginBottom: '30px'}}
                                     onChange={this.handleInputChange}
                                     value={this.state.EmailField.value}
                                     errorText={this.state.EmailField.status}
                                     hintText="Enter your email address"
-                                    disabled={this.state.buttonClicked}
+                                    disabled={this.getButtonShouldDisable()}
                                     floatingLabelText="E-mail"/><br />
                                 <TextField
                                     name="SubjectField"
+                                    style={{marginBottom: '30px'}}
                                     onChange={this.handleInputChange}
                                     value={this.state.SubjectField.value}
                                     errorText={this.state.SubjectField.status}
                                     hintText="The subject of your message"
-                                    disabled={this.state.buttonClicked}
+                                    disabled={this.getButtonShouldDisable()}
                                     floatingLabelText="Subject"/><br />
                                 <TextField
                                     name="MessageField"
+                                    style={{marginBottom: '30px'}}
                                     onChange={this.handleInputChange}
                                     value={this.state.MessageField.value}
                                     errorText={this.state.MessageField.status}
                                     hintText="Compose your message"
                                     floatingLabelText="Message"
-                                    disabled={this.state.buttonClicked}
+                                    disabled={this.getButtonShouldDisable()}
                                     fullWidth={true}
-                                    multiLine={true}/><br />
-                                <FloatingActionButton zDepth={1} className="CancelButton" backgroundColor={grey700} mini={true} onClick={this.cancelButtonClickHandler}>
-                                    <ContentUndo/>
-                                </FloatingActionButton>
-                                <SendButton 
-                                    className="SendButton"
-                                    iconClassName="SendButtonIcon"
-                                    onClick={this.sendButtonClickHandler}
-                                    actionStatus={this.state.actionStatus}>
-                                </SendButton>
+                                    multiLine={true}
+                                    rowsMax={3}/><br />
                             </div>
+                            <h1 className="ThankYouHeader" style={this.getThankYouDisplay()}>Thank you.</h1>
+                            
                         </Paper>
                     </div>
                 </MuiThemeProvider>

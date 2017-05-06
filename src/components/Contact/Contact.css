@@ -1,8 +1,10 @@
 .contactForm{
     width:100%;
+    height: 500px;
+    position:relative;
+
 }
 .formContent{
-    padding-bottom: 5%;
     padding-left: 5%;
     padding-right: 5%;
     
@@ -21,6 +23,22 @@
 .SendButton:hover .SendButtonIcon {
     padding-left: 20px;
 }
-.CancelButton{
-    margin-left:40%;
+.SendButton{
+    position: absolute;
+    top:425px;
+    left:50%
 }
+.SendButtonDisabled{
+    position: absolute;
+    top:425px;
+    left:50%
+}
+.ThankYouHeader{
+    color: #FFF;
+    text-shadow: 0 2px 2px rgba(0,0,0,1.00);
+    font-size: 64px;
+    text-align: center;
+    padding-left:500px;
+    padding-top: 100px;
+}
+

@@ -10,6 +10,10 @@ import CircularProgress from 'material-ui/CircularProgress';
 import ContentSend from 'material-ui/svg-icons/content/send';
 import ActionDone from 'material-ui/svg-icons/action/done';
 
+const ACTION_LOADING = 'loading';
+const ACTION_READY = 'ready';
+const ACTION_DONE = 'done';
+
 class SendButton extends Component {
     constructor(props) {
         super(props);
@@ -24,12 +28,12 @@ class SendButton extends Component {
 
 getSendButtonColor() {
     switch (this.props.actionStatus) {
-        case 'done':
+        case ACTION_DONE:
             return lightGreen700;
             break;
-        case 'loading':
+        case ACTION_LOADING:
             return grey900;
-        case 'ready':
+        case ACTION_READY:
             return grey700;
         default:
             return <ContentSend hoverColor={lightGreen700} />;
@@ -39,12 +43,12 @@ getSendButtonColor() {
 
 getButtonIcon(){
     switch (this.props.actionStatus) {
-        case 'done':
+        case ACTION_DONE:
             return <ActionDone color={grey900} />;
             break;
-        case 'loading':
+        case ACTION_LOADING:
             return <CircularProgress size={56} color={lightGreen700} thickness={5} />;
-        case 'ready':
+        case ACTION_READY:
             return <ContentSend hoverColor={lightGreen700} />;
         default:
             return <ContentSend hoverColor={lightGreen700} />;
@@ -53,12 +57,12 @@ getButtonIcon(){
 }
 getButtonClassName(){
     switch (this.props.actionStatus) {
-        case 'done':
-            return null;
+        case ACTION_DONE:
+            return "SendButtonDisabled";
             break;
-        case 'loading':
-            return null;
-        case 'ready':
+        case ACTION_LOADING:
+            return "SendButtonDisabled";
+        case ACTION_READY:
             return this.props.className;
         default:
             return <ContentSend hoverColor={lightGreen700} />;
@@ -67,12 +71,12 @@ getButtonClassName(){
 }
 getButtonDisabled(){
     switch (this.props.actionStatus) {
-        case 'done':
+        case ACTION_DONE:
             return true;
             break;
-        case 'loading':
+        case ACTION_LOADING:
             return false;
-        case 'ready':
+        case ACTION_READY:
             return false;
         default:
             return <ContentSend hoverColor={lightGreen700} />;
@@ -82,12 +86,12 @@ getButtonDisabled(){
 getIconStyle(){
     
     switch (this.props.actionStatus) {
-        case 'done':
+        case ACTION_DONE:
             return {fill:grey900};
             break;
-        case 'loading':
+        case ACTION_LOADING:
             return {fill:grey900};
-        case 'ready':
+        case ACTION_READY:
             return {fill:white};
         default:
             return {fill:white};
